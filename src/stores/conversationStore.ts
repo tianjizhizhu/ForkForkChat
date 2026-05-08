@@ -16,11 +16,11 @@ interface ConversationState {
   selectConversation: (id: string) => void;
   deleteConversation: (id: string) => void;
   sendMessage: (content: string) => Promise<void>;
-  sendBranchMessage: (branchId: string, content: string) => Promise<void>;
+  sendBranchMessage: (messageId: string, content: string) => Promise<void>;
   createBranch: (messageId: string, anchorText: string) => void;
   toggleBranch: (messageId: string) => void;
-  syncBranch: (branchId: string) => void;
-  deleteBranch: (branchId: string) => void;
+  syncBranch: (messageId: string) => void;
+  deleteBranch: (messageId: string) => void;
   updateStreamingContent: (content: string) => void;
   loadConversations: () => void;
   getBranchesForMessage: (messageId: string) => Branch[];
@@ -157,9 +157,9 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
     }
   },
 
-  sendBranchMessage: async (branchId: string, content: string) => {
+  sendBranchMessage: async (messageId: string, content: string) => {
     const { branches } = get();
-    const branch = branches[branchId];
+    const branch = branches[messageId];
     if (!branch) return;
 
     const userMessage: Message = {
@@ -172,9 +172,9 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
     set((state) => ({
       branches: {
         ...state.branches,
-        [branchId]: {
-          ...state.branches[branchId],
-          messages: [...state.branches[branchId].messages, userMessage],
+        [messageId]: {
+          ...state.branches[messageId],
+          messages: [...state.branches[messageId].messages, userMessage],
         },
       },
     }));
@@ -203,9 +203,9 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
       set((state) => ({
         branches: {
           ...state.branches,
-          [branchId]: {
-            ...state.branches[branchId],
-            messages: [...state.branches[branchId].messages, assistantMessage],
+          [messageId]: {
+            ...state.branches[messageId],
+            messages: [...state.branches[messageId].messages, assistantMessage],
           },
         },
         isTyping: false,
@@ -262,9 +262,9 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
     });
   },
 
-  syncBranch: (branchId: string) => {
+  syncBranch: (messageId: string) => {
     const { branches, currentConversation } = get();
-    const branch = branches[branchId];
+    const branch = branches[messageId];
     if (!branch || !currentConversation) return;
 
     const syncContent = branch.messages
@@ -290,7 +290,7 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
 
       const updatedBranches = {
         ...state.branches,
-        [branchId]: { ...state.branches[branchId], isSynced: true },
+        [messageId]: { ...state.branches[messageId], isSynced: true },
       };
       storageService.saveBranches(updatedBranches);
 
@@ -303,13 +303,13 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
     });
   },
 
-  deleteBranch: (branchId: string) => {
+  deleteBranch: (messageId: string) => {
     set((state) => {
-      const { [branchId]: _, ...remaining } = state.branches;
+      const { [messageId]: _, ...remaining } = state.branches;
       storageService.saveBranches(remaining);
       return {
         branches: remaining,
-        activeBranchId: state.activeBranchId === branchId ? null : state.activeBranchId,
+        activeBranchId: state.activeBranchId === messageId ? null : state.activeBranchId,
       };
     });
   },

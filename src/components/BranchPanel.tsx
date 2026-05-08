@@ -24,7 +24,7 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
     if (!input.trim() || isTyping) return;
 
     try {
-      await sendBranchMessage(branch.id, input.trim());
+      await sendBranchMessage(branch.messageId, input.trim());
       setInput('');
     } catch (error) {
       alert(error instanceof Error ? error.message : '发送失败，请重试');
@@ -39,13 +39,13 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
   };
 
   const handleSync = () => {
-    syncBranch(branch.id);
+    syncBranch(branch.messageId);
     onClose();
   };
 
   const handleDelete = () => {
     if (confirm('确定要删除这个分支吗？')) {
-      deleteBranch(branch.id);
+      deleteBranch(branch.messageId);
       onClose();
     }
   };
