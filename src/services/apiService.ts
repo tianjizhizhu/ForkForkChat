@@ -82,6 +82,51 @@ class APIService {
     }
   }
 
+  async generateTitle(userQuestion: string, aiAnswer: string): Promise<string> {
+    if (!this.config) {
+      throw new Error('API未配置');
+    }
+
+    const messages = [
+      {
+        role: 'system',
+        content: '你是一个标题生成助手。请根据用户的提问和AI的回答，生成一个简洁的标题（不超过15个字）。只返回标题文本，不要有任何解释。',
+      },
+      {
+        role: 'user',
+        content: `用户提问：${userQuestion}\n\nAI回答：${aiAnswer.slice(0, 500)}`,
+      },
+    ];
+
+    const request: ChatRequest = {
+      model: this.config.model,
+      messages,
+      stream: false,
+    };
+
+    try {
+      const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify(request),
+      });
+
+      if (!response.ok) {
+        throw new Error('标题生成失败');
+      }
+
+      const data = await response.json();
+      const title = data.choices?.[0]?.message?.content?.trim() || '新对话';
+      return title.length > 20 ? title.slice(0, 20) + '...' : title;
+    } catch (error) {
+      console.error('生成标题失败:', error);
+      return userQuestion.slice(0, 20) + (userQuestion.length > 20 ? '...' : '');
+    }
+  }
+
   async testConnection(): Promise<{ success: boolean; message: string }> {
     if (!this.config) {
       return { success: false, message: 'API未配置' };

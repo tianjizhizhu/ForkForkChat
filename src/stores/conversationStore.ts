@@ -139,13 +139,24 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
         createdAt: Date.now(),
       };
 
+      const isFirstRound = conversation.messages.filter(m => m.role === 'user').length === 1;
+      
+      let newTitle = conversation.title;
+      if (isFirstRound) {
+        try {
+          newTitle = await apiService.generateTitle(content, assistantContent);
+        } catch (e) {
+          newTitle = extractTitleFromAnswer(content);
+        }
+      }
+
       set((state) => {
         const updated = state.conversations.map((c) =>
           c.id === conversation.id
             ? {
                 ...c,
                 messages: [...c.messages, assistantMessage],
-                title: c.title === '新对话' ? extractTitleFromAnswer(content) : c.title,
+                title: newTitle,
                 updatedAt: Date.now(),
               }
             : c
