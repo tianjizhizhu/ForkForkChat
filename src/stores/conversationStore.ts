@@ -263,42 +263,18 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
   },
 
   syncBranch: (messageId: string) => {
-    const { branches, currentConversation } = get();
+    const { branches } = get();
     const branch = branches[messageId];
-    if (!branch || !currentConversation) return;
-
-    const syncContent = branch.messages
-      .filter((m) => m.role === 'user')
-      .map((m) => `【分支讨论】\n问题：${m.content}`)
-      .join('\n\n');
-
-    const summaryMessage: Message = {
-      id: generateId(),
-      role: 'system',
-      content: `【分支同步】针对"${branch.anchorText.slice(0, 50)}..."的分支讨论结论：\n\n${syncContent}\n\n已将讨论精华同步到主对话中。`,
-      createdAt: Date.now(),
-    };
+    if (!branch) return;
 
     set((state) => {
-      const updated = state.conversations.map((c) =>
-        c.id === currentConversation.id
-          ? { ...c, messages: [...c.messages, summaryMessage] }
-          : c
-      );
-      const updatedConversation = updated.find((c) => c.id === currentConversation.id)!;
-      storageService.saveConversations(updated);
-
       const updatedBranches = {
         ...state.branches,
         [messageId]: { ...state.branches[messageId], isSynced: true },
       };
       storageService.saveBranches(updatedBranches);
-
       return {
-        conversations: updated,
-        currentConversation: updatedConversation,
         branches: updatedBranches,
-        activeBranchId: null,
       };
     });
   },
