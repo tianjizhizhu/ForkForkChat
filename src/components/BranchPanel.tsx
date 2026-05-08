@@ -50,10 +50,10 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
   };
 
   return (
-    <div className="w-96 bg-white border-l border-gray-100 flex flex-col h-full shadow-xl">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-orange-50 to-transparent">
+    <div className="w-96 bg-white/80 backdrop-blur-md border-l border-gray-100 flex flex-col h-full shadow-xl">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"
               fill="none"
@@ -87,9 +87,9 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
       >
         <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-orange-600">锚定的原文</span>
+            <span className="text-xs font-semibold text-indigo-600">锚定的原文</span>
             {branch.isSynced && (
-              <span className="px-1.5 py-0.5 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 text-xs rounded-full font-medium">
+              <span className="px-1.5 py-0.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 text-xs rounded-full font-medium">
                 已同步
               </span>
             )}
@@ -102,7 +102,7 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
         </div>
         {!isCollapsed && (
           <div className="px-4 pb-3">
-            <blockquote className="text-sm text-gray-600 italic border-l-3 border-orange-300 pl-3 line-clamp-3">
+            <blockquote className="text-sm text-gray-600 italic border-l-3 border-indigo-300 pl-3 line-clamp-3">
               {branch.anchorText}
             </blockquote>
           </div>
@@ -112,9 +112,9 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {branch.messages.length === 0 ? (
           <div className="text-center py-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <svg
-                className="w-8 h-8 text-orange-500"
+                className="w-8 h-8 text-indigo-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -135,8 +135,8 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
               <BranchMessageItem key={message.id} message={message} />
             ))}
             {isTyping && streamingContent && (
-              <div className="flex gap-3 p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl">
-                <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="flex gap-3 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl">
+                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Bot className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1">
@@ -159,7 +159,7 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
           <button
             onClick={handleSync}
             disabled={branch.messages.length === 0 || branch.isSynced}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl hover:from-orange-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-sm font-semibold shadow-lg shadow-orange-500/20"
+            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-sm font-semibold shadow-lg shadow-indigo-500/20"
           >
             <ArrowLeftRight className="w-4 h-4" />
             <span>{branch.isSynced ? '已同步' : '同步到主对话'}</span>
@@ -179,12 +179,12 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
             onKeyDown={handleKeyDown}
             placeholder="在分支中提问..."
             rows={1}
-            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300 transition-all duration-200 text-sm"
+            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 resize-none outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all duration-200 text-sm"
           />
           <button
             onClick={handleSubmit}
             disabled={!input.trim() || isTyping}
-            className="p-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl hover:from-orange-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-orange-500/20"
+            className="p-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-indigo-500/20"
           >
             {isTyping ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -206,8 +206,8 @@ const BranchMessageItem: React.FC<{ message: Message }> = ({ message }) => {
       <div
         className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
           message.role === 'user'
-            ? 'bg-gradient-to-br from-orange-500 to-amber-600 text-white'
-            : 'bg-gradient-to-br from-violet-500 to-purple-600 text-white'
+            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
+            : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white'
         }`}
       >
         {message.role === 'user' ? (
@@ -222,8 +222,8 @@ const BranchMessageItem: React.FC<{ message: Message }> = ({ message }) => {
         <div
           className={`inline-block px-4 py-2 rounded-2xl text-sm ${
             message.role === 'user'
-              ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-tr-sm shadow-md'
-              : 'bg-gradient-to-br from-violet-50 to-purple-50 text-gray-700 rounded-tl-sm'
+              ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-tr-sm shadow-md'
+              : 'bg-gradient-to-br from-emerald-50 to-teal-50 text-gray-700 rounded-tl-sm'
           }`}
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>

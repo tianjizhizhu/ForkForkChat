@@ -43,12 +43,12 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSettingsClick }) =
     <div className="p-4 bg-white/80 backdrop-blur-md border-t border-gray-100">
       <div className="max-w-4xl mx-auto">
         {!isConfigured && (
-          <div className="mb-3 p-3 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-xl">
-            <p className="text-sm text-orange-800">
+          <div className="mb-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl">
+            <p className="text-sm text-indigo-800">
               请先{' '}
               <button
                 onClick={onSettingsClick}
-                className="underline font-medium hover:text-orange-900 transition-colors"
+                className="underline font-medium hover:text-indigo-900 transition-colors"
               >
                 配置API密钥
               </button>{' '}
@@ -57,7 +57,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSettingsClick }) =
           </div>
         )}
 
-        <div className="relative flex items-end gap-3 bg-gray-50 border border-gray-200 rounded-2xl p-3 focus-within:border-orange-300 focus-within:ring-2 focus-within:ring-orange-100 transition-all duration-200">
+        <div className="relative flex items-end gap-3 bg-gray-50 border border-gray-200 rounded-2xl p-3 focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100 transition-all duration-200">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -73,7 +73,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSettingsClick }) =
 
           <button
             onClick={handleNewChat}
-            className="p-2.5 text-gray-400 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-all duration-200"
+            className="p-2.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200"
             title="新建对话"
           >
             <svg
@@ -94,7 +94,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSettingsClick }) =
           <button
             onClick={handleSubmit}
             disabled={!input.trim() || isTyping}
-            className="p-2.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl hover:from-orange-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-orange-500/20"
+            className="p-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-indigo-500/20"
           >
             {isTyping ? (
               <Loader2 className="w-5 h-5 animate-spin" />

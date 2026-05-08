@@ -65,7 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
           {isOpen ? (
             <button
               onClick={createConversation}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl font-medium hover:from-orange-600 hover:to-amber-700 transition-all duration-200 shadow-lg shadow-orange-500/20"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-indigo-500/20"
             >
               <Plus className="w-5 h-5" />
               <span>新对话</span>
@@ -73,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
           ) : (
             <button
               onClick={createConversation}
-              className="w-full flex items-center justify-center p-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl hover:from-orange-600 hover:to-amber-700 transition-all duration-200 shadow-lg shadow-orange-500/20"
+              className="w-full flex items-center justify-center p-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-indigo-500/20"
               title="新对话"
             >
               <Plus className="w-5 h-5" />
@@ -96,14 +96,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
                     onClick={() => handleSelectConversation(conversation.id)}
                     className={`group relative p-3 rounded-xl cursor-pointer transition-all duration-200 ${
                       currentConversation?.id === conversation.id
-                        ? 'bg-gradient-to-r from-orange-50 to-amber-50 shadow-sm border border-orange-200'
+                        ? 'bg-gradient-to-r from-indigo-50 to-purple-50 shadow-sm border border-indigo-200'
                         : 'hover:bg-gray-50'
                     }`}
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         currentConversation?.id === conversation.id
-                          ? 'bg-gradient-to-br from-orange-500 to-amber-600 text-white'
+                          ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
                           : 'bg-gray-100 text-gray-500'
                       }`}>
                         <MessageSquare className="w-4 h-4" />

@@ -39,13 +39,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     setTestResult(null);
   };
 
-  const models = [
-    { value: 'MiniMax/MiniMax-M2', label: 'MiniMax M2' },
-    { value: 'MiniMax/MiniMax-AI', label: 'MiniMax AI' },
+  const quickModels = [
     { value: 'deepseek-ai/DeepSeek-V3', label: 'DeepSeek V3' },
     { value: 'deepseek-ai/DeepSeek-R1', label: 'DeepSeek R1' },
     { value: 'Qwen/Qwen2.5-72B-Instruct', label: 'Qwen 2.5 72B' },
     { value: 'Qwen/Qwen2.5-32B-Instruct', label: 'Qwen 2.5 32B' },
+    { value: 'MiniMax/MiniMax-M2', label: 'MiniMax M2' },
+    { value: 'MiniMax/MiniMax-AI', label: 'MiniMax AI' },
     { value: 'THUDM/glm-4-plus', label: 'GLM-4 Plus' },
     { value: 'THUDM/glm-4-flash', label: 'GLM-4 Flash' },
   ];
@@ -74,7 +74,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 placeholder="请输入您的API密钥"
-                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
               <button
                 type="button"
@@ -95,19 +95,30 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              模型选择
+              模型名称
             </label>
-            <select
+            <input
+              type="text"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all bg-white"
-            >
-              {models.map((m) => (
-                <option key={m.value} value={m.value}>
+              placeholder="例如: deepseek-ai/DeepSeek-V3"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+            />
+            <div className="mt-3 flex flex-wrap gap-2">
+              {quickModels.map((m) => (
+                <button
+                  key={m.value}
+                  onClick={() => setModel(m.value)}
+                  className={`px-3 py-1.5 text-xs rounded-lg transition-colors ${
+                    model === m.value
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
                   {m.label}
-                </option>
+                </button>
               ))}
-            </select>
+            </div>
           </div>
 
           {testResult && (
@@ -160,7 +171,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl hover:from-orange-600 hover:to-amber-700 transition-all shadow-lg shadow-orange-500/20"
+            className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20"
           >
             保存配置
           </button>

@@ -33,12 +33,40 @@ const generateTitle = (content: string): string => {
   if (trimmed.length <= 30) {
     return trimmed;
   }
+  
   const sentences = trimmed.split(/[。！？\n]/);
   if (sentences.length > 0 && sentences[0].trim().length > 0) {
     const firstSentence = sentences[0].trim();
     return firstSentence.length <= 30 ? firstSentence : firstSentence.slice(0, 30) + '...';
   }
   return trimmed.slice(0, 30) + '...';
+};
+
+const extractTitleFromAnswer = (userQuestion: string, aiAnswer: string): string => {
+  const trimmedAnswer = aiAnswer.trim();
+  
+  const patterns = [
+    /(问题|答案|总结|结论|要点)[:：]\s*(.+?)([。！？\n]|$)/,
+    /(针对|关于|对于)\s*(.+?)(的|问题|，)/,
+    /您问的是\s*(.+?)([。！？\n]|$)/,
+    /我来回答\s*(.+?)([。！？\n]|$)/,
+  ];
+  
+  for (const pattern of patterns) {
+    const match = trimmedAnswer.match(pattern);
+    if (match && match[2] && match[2].trim().length > 0) {
+      const extracted = match[2].trim();
+      return extracted.length <= 30 ? extracted : extracted.slice(0, 30) + '...';
+    }
+  }
+  
+  const sentences = trimmedAnswer.split(/[。！？\n]/);
+  if (sentences.length > 0 && sentences[0].trim().length > 0) {
+    const firstSentence = sentences[0].trim();
+    return firstSentence.length <= 30 ? firstSentence : firstSentence.slice(0, 30) + '...';
+  }
+  
+  return generateTitle(userQuestion);
 };
 
 export const useConversationStore = create<ConversationState>((set, get) => ({
@@ -150,7 +178,7 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
             ? {
                 ...c,
                 messages: [...c.messages, assistantMessage],
-                title: c.messages.length === 0 ? generateTitle(content) : c.title,
+                title: c.messages.length === 0 ? extractTitleFromAnswer(content, assistantContent) : c.title,
                 updatedAt: Date.now(),
               }
             : c

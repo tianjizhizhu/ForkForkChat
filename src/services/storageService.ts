@@ -39,9 +39,7 @@ class StorageService {
 
   saveConfig(config: APIConfig): void {
     try {
-      const encoded = btoa(config.apiKey);
-      const dataToSave = { ...config, apiKey: encoded };
-      localStorage.setItem(STORAGE_KEYS.API_CONFIG, JSON.stringify(dataToSave));
+      localStorage.setItem(STORAGE_KEYS.API_CONFIG, JSON.stringify(config));
     } catch (error) {
       console.error('Failed to save config:', error);
     }
@@ -53,8 +51,9 @@ class StorageService {
       if (!data) return null;
       const parsed = JSON.parse(data);
       return {
-        ...parsed,
-        apiKey: atob(parsed.apiKey),
+        apiKey: parsed.apiKey || '',
+        model: parsed.model || DEFAULT_MODEL,
+        baseUrl: parsed.baseUrl || DEFAULT_BASE_URL,
       };
     } catch (error) {
       console.error('Failed to load config:', error);

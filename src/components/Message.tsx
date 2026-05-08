@@ -31,16 +31,16 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onTog
     <div
       className={clsx(
         'flex gap-4 p-4 md:p-5 rounded-2xl animate-fadeIn shadow-sm',
-        message.role === 'user' ? 'bg-gradient-to-br from-orange-50 to-amber-50' : 'bg-white border border-gray-100',
-        isBranchActive && 'border-r-4 border-r-orange-400'
+        message.role === 'user' ? 'bg-gradient-to-br from-indigo-50 to-purple-50' : 'bg-white/80 backdrop-blur-md border border-gray-100',
+        isBranchActive && 'border-r-4 border-r-indigo-400'
       )}
     >
       <div
         className={clsx(
           'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md',
           message.role === 'user'
-            ? 'bg-gradient-to-br from-orange-500 to-amber-600 text-white'
-            : 'bg-gradient-to-br from-violet-500 to-purple-600 text-white'
+            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
+            : 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white'
         )}
       >
         {message.role === 'user' ? (
@@ -56,7 +56,7 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onTog
             {message.role === 'user' ? '你' : 'AI助手'}
           </span>
           {message.role === 'system' && (
-            <span className="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded-full font-medium">
+            <span className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs rounded-full font-medium">
               分支同步
             </span>
           )}
@@ -109,7 +109,7 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onTog
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-orange-600 hover:text-orange-700 underline underline-offset-2"
+                    className="text-indigo-600 hover:text-indigo-700 underline underline-offset-2"
                   >
                     {children}
                   </a>
@@ -117,7 +117,7 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onTog
               },
               blockquote({ children }) {
                 return (
-                  <blockquote className="border-l-4 border-orange-300 pl-4 italic text-gray-600 my-3">
+                  <blockquote className="border-l-4 border-indigo-300 pl-4 italic text-gray-600 my-3">
                     {children}
                   </blockquote>
                 );
@@ -164,20 +164,20 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onTog
                 className={clsx(
                   'flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-all duration-200',
                   isBranchActive
-                    ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700'
-                    : 'text-orange-600 hover:text-orange-700 hover:bg-orange-50'
+                    ? 'bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700'
+                    : 'text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50'
                 )}
               >
                 <ChevronRight className={clsx('w-3.5 h-3.5 transition-transform duration-200', isBranchActive && 'rotate-90')} />
                 <span>{isBranchActive ? '收起分支' : '查看分支'}</span>
                 {branch.isSynced && (
-                  <span className="ml-1 px-1.5 py-0.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white text-xs rounded-full font-medium">已同步</span>
+                  <span className="ml-1 px-1.5 py-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs rounded-full font-medium">已同步</span>
                 )}
               </button>
             ) : (
               <button
                 onClick={() => onCreateBranch(message.id)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-all duration-200"
               >
                 <GitBranch className="w-3.5 h-3.5" />
                 <span>创建分支</span>
