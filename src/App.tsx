@@ -10,12 +10,14 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const { loadConfig, isConfigured } = useConfigStore();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { loadConfig, config, isConfigured } = useConfigStore();
   const { loadConversations } = useConversationStore();
 
   useEffect(() => {
     loadConfig();
     loadConversations();
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -34,10 +36,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isConfigured) {
+    if (isLoaded && !config.apiKey) {
       setIsSettingsOpen(true);
     }
-  }, [isConfigured]);
+  }, [isLoaded, config.apiKey]);
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
