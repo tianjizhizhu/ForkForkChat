@@ -3,10 +3,12 @@ import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { ChatArea } from './components/ChatArea';
 import { SettingsModal } from './components/SettingsModal';
+import { LandingPage } from './components/LandingPage';
 import { useConfigStore } from './stores/configStore';
 import { useConversationStore } from './stores/conversationStore';
 
 function App() {
+  const [showLanding, setShowLanding] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -36,10 +38,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (isLoaded && !config.apiKey) {
+    if (isLoaded && !config.apiKey && !showLanding) {
       setIsSettingsOpen(true);
     }
-  }, [isLoaded, config.apiKey]);
+  }, [isLoaded, config.apiKey, showLanding]);
+
+  const handleEnterApp = () => {
+    setShowLanding(false);
+  };
+
+  if (showLanding) {
+    return <LandingPage onEnterApp={handleEnterApp} />;
+  }
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
