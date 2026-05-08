@@ -128,7 +128,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ onSettingsClick, onMenuClick
                 </div>
               ))}
 
-              {isTyping && streamingContent && (
+              {isTyping && streamingContent && !activeBranchId && (
                 <div className="flex gap-4 p-4 bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl shadow-sm">
                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg

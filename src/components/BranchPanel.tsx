@@ -23,9 +23,11 @@ export const BranchPanel: React.FC<BranchPanelProps> = ({ branch, onClose }) => 
   const handleSubmit = async () => {
     if (!input.trim() || isTyping) return;
 
+    const message = input.trim();
+    setInput('');
+
     try {
-      await sendBranchMessage(branch.messageId, input.trim());
-      setInput('');
+      await sendBranchMessage(branch.messageId, message);
     } catch (error) {
       alert(error instanceof Error ? error.message : '发送失败，请重试');
     }
