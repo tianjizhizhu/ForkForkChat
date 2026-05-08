@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Copy, GitBranch, Check, User, Bot } from 'lucide-react';
+import { Copy, GitBranch, Check, User, Bot, ChevronRight } from 'lucide-react';
 import { Message as MessageType } from '../types';
 import { useConversationStore } from '../stores/conversationStore';
 import clsx from 'clsx';
@@ -9,11 +9,17 @@ import clsx from 'clsx';
 interface MessageProps {
   message: MessageType;
   onCreateBranch: (messageId: string) => void;
+  onToggleBranch: (messageId: string) => void;
 }
 
-export const Message: React.FC<MessageProps> = ({ message, onCreateBranch }) => {
+export const Message: React.FC<MessageProps> = ({ message, onCreateBranch, onToggleBranch }) => {
   const [copied, setCopied] = React.useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { branches, activeBranchId } = useConversationStore();
+  
+  const branch = branches[message.id];
+  const hasBranch = !!branch;
+  const isBranchActive = hasBranch && activeBranchId === message.id;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(message.content);
@@ -25,7 +31,8 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch }) => 
     <div
       className={clsx(
         'flex gap-4 p-4 rounded-2xl animate-fadeIn',
-        message.role === 'user' ? 'bg-indigo-50' : 'bg-white border border-gray-100'
+        message.role === 'user' ? 'bg-indigo-50' : 'bg-white border border-gray-100',
+        isBranchActive && 'border-r-4 border-r-emerald-400'
       )}
     >
       <div
@@ -151,13 +158,31 @@ export const Message: React.FC<MessageProps> = ({ message, onCreateBranch }) => 
                 </>
               )}
             </button>
-            <button
-              onClick={() => onCreateBranch(message.id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors"
-            >
-              <GitBranch className="w-3.5 h-3.5" />
-              <span>创建分支</span>
-            </button>
+            {hasBranch ? (
+              <button
+                onClick={() => onToggleBranch(message.id)}
+                className={clsx(
+                  'flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors',
+                  isBranchActive
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50'
+                )}
+              >
+                <ChevronRight className={clsx('w-3.5 h-3.5 transition-transform', isBranchActive && 'rotate-90')} />
+                <span>{isBranchActive ? '收起分支' : '查看分支'}</span>
+                {branch.isSynced && (
+                  <span className="ml-1 px-1.5 py-0.5 bg-emerald-500 text-white text-xs rounded">已同步</span>
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => onCreateBranch(message.id)}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors"
+              >
+                <GitBranch className="w-3.5 h-3.5" />
+                <span>创建分支</span>
+              </button>
+            )}
           </div>
         )}
       </div>

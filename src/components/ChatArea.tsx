@@ -36,6 +36,10 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ onSettingsClick }) => {
     }
   };
 
+  const handleToggleBranch = (messageId: string) => {
+    toggleBranch(messageId);
+  };
+
   const handleCloseBranch = () => {
     if (activeBranchId) {
       toggleBranch(activeBranchId);
@@ -76,17 +80,15 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ onSettingsClick }) => {
             </div>
           ) : (
             <>
-              {currentConversation.messages.map((message) => (
+              {currentConversation.messages
+                .filter((msg) => msg.role !== 'system')
+                .map((message) => (
                 <div key={message.id} className="relative">
                   <Message
                     message={message}
                     onCreateBranch={handleCreateBranch}
+                    onToggleBranch={handleToggleBranch}
                   />
-                  {branches[message.id] && branches[message.id].isExpanded && activeBranchId === message.id && (
-                    <div className="absolute -right-2 top-0 h-full">
-                      <div className="w-1 h-full bg-emerald-400 rounded-full"></div>
-                    </div>
-                  )}
                 </div>
               ))}
 
