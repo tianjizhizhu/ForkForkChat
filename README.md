@@ -1,57 +1,86 @@
-# React + TypeScript + Vite
+# ForkForkChat - 锚定式分支对话
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 🔗 像代码分支一样管理你的 AI 对话
 
-Currently, two official plugins are available:
+**预览网址**: [https://forkforkchat.vercel.app/](https://forkforkchat.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ 核心特性
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 锚定对话
+针对 AI 回复中的任意片段创建锚点，像 Word 批注一样精准定位讨论内容，不再迷失在长篇回复中。
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 分支讨论
+每个锚点都是一个独立分支，支持多轮深入讨论。分支之间相互独立，不影响主对话流程。
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 同步合并
+分支讨论完成后，一键同步回主对话。所有洞察和结论无缝整合，保持对话的完整性和连贯性。
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🎯 使用场景
+
+- **技术讨论**: 在代码解释中锚定关键技术点，深入探讨
+- **方案对比**: 对比多个方案时，各自展开独立分支讨论
+- **知识挖掘**: 锚定有价值的内容，深入挖掘相关知识点
+- **创意发散**: 从一个想法出发，分支探索多个方向
+
+---
+
+## 🛠️ 技术栈
+
+- **前端框架**: React 18 + TypeScript
+- **构建工具**: Vite
+- **样式方案**: Tailwind CSS
+- **状态管理**: Zustand
+- **AI 集成**: Silicon Flow API
+- **部署平台**: Vercel
+
+---
+
+## 🚀 快速开始
+
+### 1. 配置 API
+
+首次使用时，点击右上角「API配置」按钮，填入你的 Silicon Flow API 密钥。
+
+### 2. 开始对话
+
+输入消息开始对话，AI 回复后将自动显示操作选项。
+
+### 3. 创建分支
+
+针对任意 AI 回复片段，点击「创建分支」开启独立讨论空间。
+
+### 4. 同步汇总
+
+分支讨论完成后，点击「同步到主对话」将结论合并回主线。
+
+---
+
+## 📱 全平台支持
+
+- 💻 **桌面端**: 三栏布局，高效操作
+- 📱 **平板端**: 自适应布局，触控优化  
+- 📲 **手机端**: 侧边栏收起，专注对话
+
+---
+
+## 🎨 设计理念
+
+ForkForkChat 的命名灵感来自 Git 的 Fork 概念。我们相信：
+
+> **好的对话应该有层次，有分支，有条理。**
+
+每一次 AI 回复都可能是一个新的起点。锚定、探索、同步 — 让你的思考脉络清晰可见。
+
+---
+
+## 📄 许可证
+
+MIT License
+
+---
+
+**Made with ❤️ for better AI conversations**
