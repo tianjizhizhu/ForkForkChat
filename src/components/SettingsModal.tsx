@@ -59,17 +59,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
   if (!isOpen && !isVisible) return null;
 
-  const quickModels = [
-    { value: 'deepseek-ai/DeepSeek-V3', label: 'DeepSeek V3' },
-    { value: 'deepseek-ai/DeepSeek-R1', label: 'DeepSeek R1' },
-    { value: 'Qwen/Qwen2.5-72B-Instruct', label: 'Qwen 2.5 72B' },
-    { value: 'Qwen/Qwen2.5-32B-Instruct', label: 'Qwen 2.5 32B' },
-    { value: 'MiniMax/MiniMax-M2', label: 'MiniMax M2' },
-    { value: 'MiniMax/MiniMax-AI', label: 'MiniMax AI' },
-    { value: 'THUDM/glm-4-plus', label: 'GLM-4 Plus' },
-    { value: 'THUDM/glm-4-flash', label: 'GLM-4 Flash' },
-  ];
-
   return (
     <div 
       className={`fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-200 ${
@@ -105,13 +94,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           <div className="group">
             <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <span className="w-2 h-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full"/>
-              Silicon Flow API地址
+              API 地址
             </label>
             <input
               type="text"
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
-              placeholder="https://api.siliconflow.cn"
+              placeholder="https://api.openai.com/v1"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white group-hover:border-indigo-200"
             />
           </div>
@@ -119,14 +108,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           <div className="group">
             <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <span className="w-2 h-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full"/>
-              Silicon Flow API密钥
+              API 密钥
             </label>
             <div className="relative">
               <input
                 type={showApiKey ? 'text' : 'password'}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="请输入您的API密钥"
+                placeholder="sk-..."
                 className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all group-hover:border-indigo-200"
               />
               <button
@@ -141,10 +130,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 )}
               </button>
             </div>
-            <p className="mt-2 text-xs text-gray-500 flex items-center gap-1">
-              <span className="w-1 h-1 bg-gray-400 rounded-full"/>
-              请从 Silicon Flow 官网获取API密钥
-            </p>
           </div>
 
           <div className="group">
@@ -156,24 +141,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="text"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              placeholder="例如: deepseek-ai/DeepSeek-V3"
+              placeholder="例如: gpt-4o-mini"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white group-hover:border-indigo-200"
             />
-            <div className="mt-3 flex flex-wrap gap-2">
-              {quickModels.map((m) => (
-                <button
-                  key={m.value}
-                  onClick={() => setModel(m.value)}
-                  className={`px-3 py-1.5 text-xs rounded-lg transition-all duration-200 ${
-                    model === m.value
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30'
-                      : 'bg-gray-100 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600'
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
+            <p className="mt-2 text-xs text-gray-500 flex items-center gap-1">
+              <span className="w-1 h-1 bg-gray-400 rounded-full"/>
+              支持 OpenAI 兼容格式的 API
+            </p>
           </div>
 
           {testResult && (

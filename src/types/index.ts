@@ -61,5 +61,5 @@ export const STORAGE_KEYS = {
   CURRENT_CONVERSATION: 'forkforkchat_current_conversation',
 } as const;
 
-export const DEFAULT_MODEL = 'MiniMax/MiniMax-M2';
-export const DEFAULT_BASE_URL = 'https://api.siliconflow.cn/v1';
+export const DEFAULT_MODEL = 'gpt-4o-mini';
+export const DEFAULT_BASE_URL = 'https://api.openai.com/v1';
